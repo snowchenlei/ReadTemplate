@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="Snow.ReadTemplate.ArticleDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    xmlns:data="using:Snow.NewsTemplate.Models"
+    Loaded="NewDetail_OnLoaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Margin="20">
+                <TextBlock Name="Title" 
+                           TextWrapping="Wrap"
+                           FontWeight="Bold" 
+                           FontSize="24"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="CreationTime" Margin="0,0,20,0"></TextBlock>
+                    <TextBlock Name="Author"></TextBlock>
+                </StackPanel>
+                <TextBlock Name="Content"></TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+        <controls:Loading x:Name="NewDetailViewLoadingProgressRing"
+                          VerticalAlignment="Center"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center">
+            <controls:Loading.Background>
+                <SolidColorBrush Color="White" Opacity="0.7" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal" Padding="12">
+                <Grid Margin="0,0,8,0">
+                    <ProgressRing IsActive="True" Foreground="{ThemeResource Brush-Blue-01}"/>
+                </Grid>
+                <TextBlock Text="数据加载中!" Foreground="Black" VerticalAlignment="Center" />
+            </StackPanel>
+        </controls:Loading>
+    </Grid>
+    
+</Page>

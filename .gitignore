@@ -3,3 +3,5 @@
 ################################################################################
 
 /src/.vs/Snow.ReadTemplate/v16
+/src/Snow.ReadTemplate/bin
+/src/Snow.ReadTemplate/obj
