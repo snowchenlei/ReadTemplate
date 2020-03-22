@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Collections;
-using Snow.NewsTemplate.Models;
+using Snow.ReadTemplate.Models;
 
-namespace Snow.NewsTemplate.Data
+namespace Snow.ReadTemplate.Data
 {
    public  class BookSource : IIncrementalSource<Book>
     {

@@ -1,12 +1,11 @@
 ﻿<Page
-    x:Class="Snow.ReadTemplate.ArticleDetail"
+    x:Class="Snow.ReadTemplate.Pages.Article.ArticleDetail"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    xmlns:data="using:Snow.NewsTemplate.Models"
     Loaded="NewDetail_OnLoaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

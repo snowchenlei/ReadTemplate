@@ -1,8 +1,9 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp;
-using Snow.NewsTemplate.Data;
-using Snow.NewsTemplate.Models;
+using Snow.ReadTemplate.Data;
+using Snow.ReadTemplate.Models;
+using Snow.ReadTemplate.Pages.Article;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 

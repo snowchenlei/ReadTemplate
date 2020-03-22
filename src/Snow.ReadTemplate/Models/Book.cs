@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Snow.NewsTemplate.Models
+namespace Snow.ReadTemplate.Models
 {
     public class Book
     {

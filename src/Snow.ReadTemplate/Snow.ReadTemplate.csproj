@@ -7,8 +7,8 @@
     <ProjectGuid>{FC585873-D7CF-4E73-80DC-A40DA65900DE}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snow.NewsTemplate</RootNamespace>
-    <AssemblyName>Snow.NewsTemplate</AssemblyName>
+    <RootNamespace>Snow.ReadTemplate</RootNamespace>
+    <AssemblyName>Snow.ReadTemplate</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -130,10 +130,10 @@
     <Compile Include="MyContentPage.xaml.cs">
       <DependentUpon>MyContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ArticleDetail.xaml.cs">
+    <Compile Include="Pages\Article\ArticleDetail.xaml.cs">
       <DependentUpon>ArticleDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ArticleList.xaml.cs">
+    <Compile Include="Pages\Article\ArticleList.xaml.cs">
       <DependentUpon>ArticleList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LogoPage.xaml.cs">
@@ -192,11 +192,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ArticleDetail.xaml">
+    <Page Include="Pages\Article\ArticleDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ArticleList.xaml">
+    <Page Include="Pages\Article\ArticleList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
