@@ -5,9 +5,77 @@
     xmlns:local="using:Snow.ReadTemplate"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Loaded="ArticleList_OnLoaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid></Grid>
+    <Grid>
+        <ListView x:Name="ArticlesListView"
+                  Grid.Column="0"
+                  Background="{ThemeResource Brush-Grey-05}"
+                  SelectionMode="Single"
+                  ShowsScrollingPlaceholders="True"
+                  IsItemClickEnabled="True"
+                  ItemClick="ArticlesListView_OnItemClick">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0, 10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="{Binding CoverImage}" 
+                               Grid.Column="0"
+                               Grid.RowSpan="2"
+                               Margin="0, 0, 10, 0"
+                               MaxHeight="100" 
+                               Stretch="Fill"/>
+
+                        <TextBlock Text="{Binding Title}"
+                                   TextWrapping="Wrap" 
+                                   HorizontalTextAlignment="DetectFromContent"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   FontSize="14"
+                                       Style="{ThemeResource BaseTextBlockStyle}"
+                                       FontWeight="SemiBold"/>
+                        <StackPanel  Grid.Row="1"
+                                     Grid.Column="1"
+                                     VerticalAlignment="Bottom"
+                                     Margin="0, 5"
+                                     Orientation="Horizontal">
+                            <TextBlock Text="{Binding Time}"/>
+                            <TextBlock Text="`" FontSize="24" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding Author}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <controls:Loading x:Name="NewsListViewLoadingProgressRing"
+                          Grid.Column="0"
+                          BackgroundSizing="InnerBorderEdge"
+                          HorizontalContentAlignment="Center"
+                          VerticalAlignment="Bottom">
+            <controls:Loading.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal" Padding="12">
+                <Grid Margin="0,0,8,0">
+                    <ProgressRing IsActive="True" Foreground="{ThemeResource Brush-Blue-01}"/>
+                </Grid>
+                <TextBlock Text="数据加载中!" Foreground="Black" VerticalAlignment="Center" />
+            </StackPanel>
+        </controls:Loading>
+    </Grid>
 </Page>

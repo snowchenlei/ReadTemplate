@@ -1,9 +1,12 @@
-﻿using Windows.UI.Xaml;
+﻿using System.ComponentModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp;
 using Snow.ReadTemplate.Data;
 using Snow.ReadTemplate.Models;
 using Snow.ReadTemplate.Pages.Article;
+using Snow.ReadTemplate.ViewModels;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -14,42 +17,19 @@ namespace Snow.ReadTemplate
     /// </summary>
     public sealed partial class HomePage : Page
     {
-
+        private MainViewModel ViewModel => MainPage.Current.ViewModel;
 
         public HomePage()
         {
             this.InitializeComponent();
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+            ListFrame.Navigate(typeof(ArticleList));
         }
 
-        private void HomePage_OnLoaded(object sender, RoutedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var collection = new IncrementalLoadingCollection<BookSource, Book>
-            {
-                OnStartLoading = OnStartLoading, 
-                OnEndLoading = OnEndLoading
-            };
-            NewsListView.ItemsSource = collection;
-        }
-
-        private void OnEndLoading()
-        {
-            //NewsListViewLoadingProgressRing.IsActive = false;
-            //NewsListViewLoadingProgressRing.Visibility = Visibility.Collapsed;
-            NewsListViewLoadingProgressRing.IsLoading = false;
-        }
-
-        private void OnStartLoading()
-        {
-            //NewsListViewLoadingProgressRing.IsActive = true;
-            //NewsListViewLoadingProgressRing.Visibility = Visibility.Visible;
-            NewsListViewLoadingProgressRing.IsLoading = true;
-        }
-
-        private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            Book book = e.ClickedItem as Book ?? new Book();
-            DetailFrame.Navigate(typeof(ArticleDetail), book.Id);
-
+            ArticleViewModel article = ViewModel.CurrentArticle;
+            DetailFrame.Navigate(typeof(ArticleDetail), article.Id);
         }
     }
 }

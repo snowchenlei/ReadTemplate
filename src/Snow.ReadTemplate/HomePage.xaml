@@ -6,12 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Loaded="HomePage_OnLoaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="300" MaxWidth="500"></ColumnDefinition>
+            <ColumnDefinition Width="*" MinWidth="325" MaxWidth="500"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <!--<Grid.RowDefinitions>
@@ -19,34 +18,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>-->
 
-        <ListView x:Name="NewsListView"
-                  Grid.Column="0"
-                  Margin="0,0,8,0"
-                  Background="{ThemeResource Brush-Grey-05}"
-                  SelectionMode="Single"
-                  ShowsScrollingPlaceholders="True"
-                  IsItemClickEnabled="True"
-                  ItemClick="ListViewBase_OnItemClick">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
-                        <Image Source="{Binding CoverImage}" MaxHeight="100" Stretch="Fill"/>
-                        <StackPanel Margin="12,0,0,0" >
-                            <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="SemiBold" Style="{ThemeResource BaseTextBlockStyle}"
-                                           HorizontalAlignment="Left" Margin="0,0,0,6" LineHeight="20"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Id}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}" Margin="0,0,0,0"/>
-                                <TextBlock Text="1" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                                <TextBlock Text=" ⋅ " FontFamily="Segoe UI" FontSize="12" FontWeight="Bold" 
-                                               HorizontalAlignment="Left"/>
-                                <TextBlock Text="{Binding Author}" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}" Margin="5,0,0,0"/>
-                                <TextBlock Text=" Likes" HorizontalAlignment="Left" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Frame Grid.Column="0" Name="ListFrame" Padding="0,0,8,0"/>
 
         <StackPanel Orientation="Horizontal" 
                     Visibility="Collapsed"
@@ -67,21 +39,6 @@
             <!--<SymbolIcon Symbol="CalendarDay" />
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />-->
         </StackPanel>
-        <controls:Loading x:Name="NewsListViewLoadingProgressRing"
-                          Grid.Column="0"
-                           BackgroundSizing="InnerBorderEdge"
-                          HorizontalContentAlignment="Center"
-                          VerticalAlignment="Bottom">
-            <controls:Loading.Background>
-                <SolidColorBrush Color="Black" Opacity="0.7" />
-            </controls:Loading.Background>
-            <StackPanel Orientation="Horizontal" Padding="12">
-                <Grid Margin="0,0,8,0">
-                    <ProgressRing IsActive="True" Foreground="{ThemeResource Brush-Blue-01}"/>
-                </Grid>
-                <TextBlock Text="数据加载中!" Foreground="Black" VerticalAlignment="Center" />
-            </StackPanel>
-        </controls:Loading>
         <controls:GridSplitter
             GripperCursor="Default"
             HorizontalAlignment="Left"

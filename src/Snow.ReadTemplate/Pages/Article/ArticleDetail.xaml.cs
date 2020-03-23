@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Snow.ReadTemplate.Models;
+using Snow.ReadTemplate.ViewModels;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -13,7 +14,7 @@ namespace Snow.ReadTemplate.Pages.Article
     /// </summary>
     public sealed partial class ArticleDetail : Page
     {
-        public Book Book { get; set; }
+        public ArticleViewModel Article { get; set; }
         public ArticleDetail()
         {
             this.InitializeComponent();
@@ -25,11 +26,11 @@ namespace Snow.ReadTemplate.Pages.Article
         {
             NewDetailViewLoadingProgressRing.IsLoading = true;
 
-            Book = await BookManager.GetBook(_id);
-            Title.Text = Book.Title;
-            Author.Text = Book.Author;
-            CreationTime.Text = Book.CreationTime;
-            Content.Text = Book.CoverImage;
+            Article = await BookManager.GetBook(_id);
+            Title.Text = Article.Title;
+            Author.Text = Article.Author;
+            CreationTime.Text = Article.CreationTime;
+            Content.Text = Article.CoverImage;
 
             NewDetailViewLoadingProgressRing.IsLoading = false;
         }
