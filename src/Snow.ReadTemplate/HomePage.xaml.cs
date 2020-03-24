@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -24,6 +25,23 @@ namespace Snow.ReadTemplate
             this.InitializeComponent();
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             ListFrame.Navigate(typeof(ArticleList));
+
+            DispatcherTimer time = new DispatcherTimer();
+            time.Interval = new TimeSpan(0, 0, 1);
+            time.Tick += Time_Tick;
+            time.Start();
+        }
+
+        private void Time_Tick(object sender, object e)
+        {
+            int i = ArticleFv.SelectedIndex;
+            i++;
+            if (i >= ArticleFv.Items.Count)
+            {
+                i = 0;
+            }
+
+            ArticleFv.SelectedIndex = i;
         }
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

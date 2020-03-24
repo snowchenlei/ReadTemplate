@@ -5,37 +5,63 @@
     xmlns:local="using:Snow.ReadTemplate"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Loaded="NavView_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView x:Name="NavView"
-                    IsBackButtonVisible="Visible"
-                    IsBackEnabled="True"
-                    IsSettingsVisible="True"
-                    IsPaneOpen="False"
-                    AlwaysShowHeader="False"
-                    SelectionFollowsFocus="Enabled"
-                    BackRequested="NavView_BackRequested"
-                    SelectionChanged="NavView_SelectionChanged"
-                    >
-        <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Home" Content="首页" Tag="home" />
-            <NavigationViewItem Content="频道" Tag="SamplePage2" >
-                <NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF0E2;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-        </NavigationView.MenuItems>
-        <NavigationView.PaneFooter>
-            <StackPanel x:Name="FooterStackPanel" Orientation="Vertical" Visibility="Visible">
-                <NavigationViewItem Content="用户">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets"  Glyph="&#xE77B;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </StackPanel>
-        </NavigationView.PaneFooter>
-        <Frame x:Name="ContentFrame"/>
-    </NavigationView>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border x:Name="AppTitleBar"
+                Grid.Column="1"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Height="{Binding ElementName=NavView, Path=CompactPaneLength}"
+                Canvas.ZIndex="1">
+            <TextBlock x:Name="AppTitle"
+                   Text="{x:Bind GetAppTitleFromSystem()}"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource CaptionTextBlockStyle}" />
+        </Border>
+        <muxc:NavigationView x:Name="NavView"
+                            Canvas.ZIndex="0"
+                            Grid.Column="1"
+                            Header=" "
+                            IsTabStop="False"
+                            IsTitleBarAutoPaddingEnabled="False"
+                            IsBackEnabled="True"
+                            IsSettingsVisible="True"
+                            IsPaneOpen="False"
+                            AlwaysShowHeader="False"
+                            Loaded="NavView_OnLoaded"
+                            BackRequested="NavView_OnBackRequested"
+                            PaneClosing="NavView_OnPaneClosing"
+                            PaneOpening="NavView_OnPaneOpening"
+                            DisplayModeChanged="NavView_OnDisplayModeChanged"
+                            SelectionChanged="NavView_OnSelectionChanged"
+                            ItemInvoked="NavView_OnItemInvoked">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home"/>
+                <muxc:NavigationViewItemSeparator/>
+                <muxc:NavigationViewItemHeader x:Name="MainPagesHeader"
+                                               Content="Main pages"/>
+                <muxc:NavigationViewItem Tag="apps" Content="Apps">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB3C;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="games" Content="Games">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7FC;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
+            </muxc:NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame"/>
+        </muxc:NavigationView>
+    </Grid>
 </Page>

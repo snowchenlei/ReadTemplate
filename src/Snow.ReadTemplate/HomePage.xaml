@@ -13,16 +13,24 @@
             <ColumnDefinition Width="*" MinWidth="325" MaxWidth="500"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <Frame Grid.Column="0" Name="ListFrame" Padding="0,0,8,0"/>
+        <FlipView Name="ArticleFv"
+                  Grid.Column="0"
+                  Grid.Row="0">
+            <Image Source="/Assets/1.png" AutomationProperties.Name="Cliff"/>
+            <Image Source="/Assets/2.png" AutomationProperties.Name="Grapes"/>
+            <Image Source="/Assets/3.png" AutomationProperties.Name="Rainier"/>
+        </FlipView>
+        <Frame Grid.Column="0" Grid.Row="1" Name="ListFrame" Padding="0,0,8,0"/>
 
         <StackPanel Orientation="Horizontal" 
                     Visibility="Collapsed"
                     Grid.Column="0"
+                    Grid.Row="1"
                     HorizontalAlignment="Right">
             <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
                 <AppBarButton Icon="Add" Label="Add"/>
@@ -43,6 +51,8 @@
             GripperCursor="Default"
             HorizontalAlignment="Left"
             Grid.Column="1"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             Background="White"
             ResizeDirection="Auto"
             ResizeBehavior="BasedOnAlignment"
@@ -57,7 +67,7 @@
                 <TranslateTransform X="-8" />
             </controls:GridSplitter.RenderTransform>
         </controls:GridSplitter>
-        <Frame Grid.Column="1" Name="DetailFrame" Padding="12,0,0,0"/>
+        <Frame Grid.Column="1" Grid.RowSpan="2" Name="DetailFrame" Padding="12,0,0,0"/>
     </Grid>
 
 </Page>

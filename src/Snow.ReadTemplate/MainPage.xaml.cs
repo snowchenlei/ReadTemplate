@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -17,6 +18,12 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Snow.ReadTemplate.ViewModels;
+using muxc = Microsoft.UI.Xaml.Controls;
+using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
+using NavigationViewDisplayModeChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs;
+using NavigationViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs;
+using NavigationViewPaneClosingEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewPaneClosingEventArgs;
+using NavigationViewSelectionChangedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -30,7 +37,7 @@ namespace Snow.ReadTemplate
         public static MainPage Current = null;
 
         public MainViewModel ViewModel { get; } = new MainViewModel();
-
+        
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
             ("home", typeof(HomePage)),
@@ -40,27 +47,42 @@ namespace Snow.ReadTemplate
         public MainPage()
         {
             this.InitializeComponent();
-
+            AddNavigationMenuItems();
             Current = this;
+            
+            Window.Current.SetTitleBar(AppTitleBar);
+
+            CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
+
+            
         }
 
-        private void NavView_Loaded(object sender, RoutedEventArgs e)
+        private void AddNavigationMenuItems()
         {
-            // You can also add items in code.
-            NavView.MenuItems.Add(new NavigationViewItemSeparator());
-            NavView.MenuItems.Add(new NavigationViewItem
-            {
-                Content = "My content",
-                Icon = new SymbolIcon((Symbol)0xF1AD),
-                Tag = "content"
-            });
-            _pages.Add(("content", typeof(MyContentPage)));
+            //NavView.MenuItems.Add();
+        }
 
+        void UpdateAppTitle(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            //ensure the custom title bar does not overlap window caption controls
+            Thickness currMargin = AppTitleBar.Margin;
+            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
+        }
+
+        public string GetAppTitleFromSystem()
+        {
+            return Windows.ApplicationModel.Package.Current.DisplayName;
+        }
+
+
+        private void NavView_OnLoaded(object sender, RoutedEventArgs e)
+        {
             // Add handler for ContentFrame navigation.
             ContentFrame.Navigated += On_Navigated;
 
             // NavView doesn't load any page by default, so load home page.
             NavView.SelectedItem = NavView.MenuItems[0];
+
             // If navigation occurs on SelectionChanged, this isn't needed.
             // Because we use ItemInvoked to navigate, we need to call Navigate
             // here to load the home page.
@@ -81,11 +103,20 @@ namespace Snow.ReadTemplate
             this.KeyboardAccelerators.Add(altLeft);
         }
 
-        // NavView_SelectionChanged is not used in this example, but is shown for completeness.
-        // You will typically handle either ItemInvoked or SelectionChanged to perform navigation,
-        // but not both.
-        private void NavView_SelectionChanged(NavigationView sender,
-            NavigationViewSelectionChangedEventArgs args)
+        private void NavView_OnItemInvoked(muxc.NavigationView sender,
+            NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.IsSettingsInvoked)
+            {
+                NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
+            }
+            else
+            {
+                var navItemTag = args.InvokedItemContainer.Tag.ToString();
+                NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
+            }
+        }
+        private void NavView_OnSelectionChanged(muxc.NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected == true)
             {
@@ -97,6 +128,7 @@ namespace Snow.ReadTemplate
                 NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
         }
+
         private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
         {
             Type _page = null;
@@ -119,12 +151,90 @@ namespace Snow.ReadTemplate
                 ContentFrame.Navigate(_page, null, transitionInfo);
             }
         }
-        private void NavView_BackRequested(NavigationView sender,
-            NavigationViewBackRequestedEventArgs args)
+
+        private void NavView_OnPaneClosing(muxc.NavigationView sender, NavigationViewPaneClosingEventArgs args)
         {
-            On_BackRequested();
+            if (sender == null) throw new ArgumentNullException(nameof(sender));
+            UpdateAppTitleMargin(sender);
         }
 
+        private void NavView_OnPaneOpening(muxc.NavigationView sender, object args)
+        {
+            UpdateAppTitleMargin(sender);
+        }
+       
+
+        private void NavView_OnDisplayModeChanged(muxc.NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        {
+            Thickness currMargin = AppTitleBar.Margin;
+            if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+            {
+                AppTitleBar.Margin = new Thickness((sender.CompactPaneLength * 2), currMargin.Top, currMargin.Right, currMargin.Bottom);
+
+            }
+            else
+            {
+                AppTitleBar.Margin = new Thickness(sender.CompactPaneLength, currMargin.Top, currMargin.Right, currMargin.Bottom);
+            }
+
+            UpdateAppTitleMargin(sender);
+            //UpdateHeaderMargin(sender);
+        }
+
+        private void UpdateAppTitleMargin(muxc.NavigationView sender)
+        {
+            const int smallLeftIndent = 4, largeLeftIndent = 24;
+
+            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+            {
+                AppTitle.TranslationTransition = new Vector3Transition();
+
+                if ((sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
+                    sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+                {
+                    AppTitle.Translation = new System.Numerics.Vector3(smallLeftIndent, 0, 0);
+                }
+                else
+                {
+                    AppTitle.Translation = new System.Numerics.Vector3(largeLeftIndent, 0, 0);
+                }
+            }
+            else
+            {
+                Thickness currMargin = AppTitle.Margin;
+
+                if ((sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
+                    sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+                {
+                    AppTitle.Margin = new Thickness(smallLeftIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+                }
+                else
+                {
+                    AppTitle.Margin = new Thickness(largeLeftIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+                }
+            }
+        }
+
+        //private void UpdateHeaderMargin(Microsoft.UI.Xaml.Controls.NavigationView sender)
+        //{
+        //    if (PageHeader != null)
+        //    {
+        //        if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+        //        {
+        //            Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderMinimalPadding"];
+        //        }
+        //        else
+        //        {
+        //            Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderDefaultPadding"];
+        //        }
+        //    }
+        //}
+
+        private void NavView_OnBackRequested(muxc.NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            On_BackRequested();
+
+        }
         private void BackInvoked(KeyboardAccelerator sender,
             KeyboardAcceleratorInvokedEventArgs args)
         {
@@ -139,14 +249,13 @@ namespace Snow.ReadTemplate
 
             // Don't go back if the nav pane is overlayed.
             if (NavView.IsPaneOpen &&
-                (NavView.DisplayMode == NavigationViewDisplayMode.Compact ||
-                 NavView.DisplayMode == NavigationViewDisplayMode.Minimal))
+                (NavView.DisplayMode == muxc.NavigationViewDisplayMode.Compact ||
+                 NavView.DisplayMode == muxc.NavigationViewDisplayMode.Minimal))
                 return false;
 
             ContentFrame.GoBack();
             return true;
         }
-
         private void On_Navigated(object sender, NavigationEventArgs e)
         {
             NavView.IsBackEnabled = ContentFrame.CanGoBack;
@@ -154,7 +263,7 @@ namespace Snow.ReadTemplate
             if (ContentFrame.SourcePageType == typeof(SettingsPage))
             {
                 // SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
-                NavView.SelectedItem = (NavigationViewItem)NavView.SettingsItem;
+                NavView.SelectedItem = (muxc.NavigationViewItem)NavView.SettingsItem;
                 NavView.Header = "Settings";
             }
             else if (ContentFrame.SourcePageType != null)
@@ -162,14 +271,14 @@ namespace Snow.ReadTemplate
                 var item = _pages.FirstOrDefault(p => p.Page == e.SourcePageType);
 
                 NavView.SelectedItem = NavView.MenuItems
-                    .OfType<NavigationViewItem>()
+                    .OfType<muxc.NavigationViewItem>()
                     .First(n => n.Tag.Equals(item.Tag));
 
                 NavView.Header =
-                    ((NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
+                    ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
         }
 
-       
+
     }
 }
