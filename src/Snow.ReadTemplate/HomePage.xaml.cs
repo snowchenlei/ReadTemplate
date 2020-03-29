@@ -26,8 +26,10 @@ namespace Snow.ReadTemplate
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
             ListFrame.Navigate(typeof(ArticleList));
 
-            DispatcherTimer time = new DispatcherTimer();
-            time.Interval = new TimeSpan(0, 0, 1);
+            DispatcherTimer time = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 5)
+            };
             time.Tick += Time_Tick;
             time.Start();
         }
@@ -44,10 +46,44 @@ namespace Snow.ReadTemplate
             ArticleFv.SelectedIndex = i;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            //var menuItem = MainPage.Current.NavigationView.MenuItems.Cast<Microsoft.UI.Xaml.Controls.NavigationViewItem>().ElementAt(1);
+            //menuItem.IsSelected = true;
+            MainPage.Current.NavigationView.Header = string.Empty;
+
+            //Items = ControlInfoDataSource.Instance.Groups.SelectMany(g => g.Items).OrderBy(i => i.Title).ToList();
+        }
+
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             ArticleViewModel article = ViewModel.CurrentArticle;
             DetailFrame.Navigate(typeof(ArticleDetail), article.Id);
+        }
+
+        /// <summary>
+        /// Workaround to support earlier versions of Windows. 
+        /// </summary>
+        private void CommandBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (false)//(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Bottom;
+            }
+            else
+            {
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
+            }
+        }
+
+        private void Search_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Refresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            ArticleList.Current.RefreshAsync();
         }
     }
 }

@@ -16,10 +16,11 @@ namespace Snow.ReadTemplate.Pages.Article
     public sealed partial class ArticleList : Page
     {
         public MainViewModel ViewModel => MainPage.Current.ViewModel;
-
+        public static ArticleList Current;
         public ArticleList()
         {
             this.InitializeComponent();
+            Current = this;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,6 +48,12 @@ namespace Snow.ReadTemplate.Pages.Article
         private void ArticlesListView_OnItemClick(object sender, ItemClickEventArgs e)
         {
             ViewModel.CurrentArticle = e.ClickedItem as ArticleViewModel;
+        }
+
+        public async void RefreshAsync()
+        {
+            var collection = (IncrementalLoadingCollection<ArticleSource, ArticleViewModel>)ArticlesListView.ItemsSource;
+            await collection.RefreshAsync();
         }
     }
 }

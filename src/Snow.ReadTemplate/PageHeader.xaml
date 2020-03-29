@@ -1,0 +1,57 @@
+﻿<UserControl
+    x:Class="Snow.ReadTemplate.PageHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Snow.ReadTemplate.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    x:Name="headerControl"
+    Padding="{x:Bind HeaderPadding, Mode=OneWay}"
+    Background="Transparent"
+    Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+    FontSize="24">
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState>
+                <VisualState.StateTriggers>
+                    <local:DeviceFamilyTrigger DeviceFamily="Windows.Xbox" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="headerControl.Padding" Value="24,15,48,0" />
+                    <Setter Target="headerControl.Height" Value="75" />
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState>
+                <VisualState.StateTriggers>
+                    <local:DeviceFamilyTrigger DeviceFamily="Windows.Mobile" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="headerControl.Padding" Value="14,0,14,0" />
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+
+        <VisualStateGroup x:Name="TitleForegroundStates">
+            <VisualState x:Name="DefaultForeground" />
+            <VisualState x:Name="AlternateForeground">
+                <VisualState.Setters>
+                    <Setter Target="TitleTextBlock.Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
+                    <Setter Target="ShadowHost.Opacity" Value="0"/>
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+    <Grid x:Name="headerRoot" Padding="{Binding ElementName=headerControl, Path=Padding}" VerticalAlignment="Top" MinHeight="64">
+        <TextBlock x:Name="TitleTextBlock"
+               Style="{StaticResource HeaderTextBlockStyle}"
+               VerticalAlignment="Center"
+               FontSize="{Binding ElementName=headerControl, Path=FontSize}"
+               Foreground="{Binding ElementName=headerControl, Path=Foreground}"
+               Text="{x:Bind Title, Mode=OneWay}"
+               TextTrimming="CharacterEllipsis"
+               TextWrapping="NoWrap" />
+        </Grid>
+</UserControl>

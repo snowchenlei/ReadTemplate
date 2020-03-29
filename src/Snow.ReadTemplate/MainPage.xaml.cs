@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Snow.ReadTemplate.Common;
 using Snow.ReadTemplate.ViewModels;
 using muxc = Microsoft.UI.Xaml.Controls;
 using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
@@ -34,10 +35,27 @@ namespace Snow.ReadTemplate
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public static MainPage Current = null;
+        public static MainPage Current;
+        private PageHeader _header;
 
         public MainViewModel ViewModel { get; } = new MainViewModel();
-        
+
+        public muxc.NavigationView NavigationView
+        {
+            get { return NavView; }
+        }
+
+        public PageHeader PageHeader
+        {
+            get
+            {
+                return _header ?? (_header = UIHelper.GetDescendantsOfType<PageHeader>(NavView).FirstOrDefault());
+            }
+        }
+
+        public string PageAppTitle { get; set; }
+
+
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
             ("home", typeof(HomePage)),
@@ -69,12 +87,16 @@ namespace Snow.ReadTemplate
             AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
         }
 
-        public string GetAppTitleFromSystem()
+        public void SetAppTitle(string pageName = null)
         {
-            return Windows.ApplicationModel.Package.Current.DisplayName;
+            string title = Windows.ApplicationModel.Package.Current.DisplayName;
+            if (!String.IsNullOrEmpty(pageName))
+            {
+                title = $"{pageName} - {title}";
+            }
+            AppTitle.Text = title;
         }
-
-
+        
         private void NavView_OnLoaded(object sender, RoutedEventArgs e)
         {
             // Add handler for ContentFrame navigation.
@@ -116,14 +138,17 @@ namespace Snow.ReadTemplate
                 NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
         }
+
         private void NavView_OnSelectionChanged(muxc.NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected == true)
             {
+                SetAppTitle();
                 NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
             }
             else if (args.SelectedItemContainer != null)
             {
+                SetAppTitle(args.SelectedItemContainer.Content?.ToString());
                 var navItemTag = args.SelectedItemContainer.Tag.ToString();
                 NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
@@ -163,11 +188,10 @@ namespace Snow.ReadTemplate
             UpdateAppTitleMargin(sender);
         }
        
-
         private void NavView_OnDisplayModeChanged(muxc.NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             Thickness currMargin = AppTitleBar.Margin;
-            if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+            if (sender.DisplayMode == muxc.NavigationViewDisplayMode.Minimal)
             {
                 AppTitleBar.Margin = new Thickness((sender.CompactPaneLength * 2), currMargin.Top, currMargin.Right, currMargin.Bottom);
 
@@ -178,7 +202,7 @@ namespace Snow.ReadTemplate
             }
 
             UpdateAppTitleMargin(sender);
-            //UpdateHeaderMargin(sender);
+            UpdateHeaderMargin(sender);
         }
 
         private void UpdateAppTitleMargin(muxc.NavigationView sender)
@@ -189,8 +213,8 @@ namespace Snow.ReadTemplate
             {
                 AppTitle.TranslationTransition = new Vector3Transition();
 
-                if ((sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
-                    sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+                if ((sender.DisplayMode == muxc.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
+                    sender.DisplayMode == muxc.NavigationViewDisplayMode.Minimal)
                 {
                     AppTitle.Translation = new System.Numerics.Vector3(smallLeftIndent, 0, 0);
                 }
@@ -203,8 +227,8 @@ namespace Snow.ReadTemplate
             {
                 Thickness currMargin = AppTitle.Margin;
 
-                if ((sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
-                    sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+                if ((sender.DisplayMode == muxc.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen) ||
+                    sender.DisplayMode == muxc.NavigationViewDisplayMode.Minimal)
                 {
                     AppTitle.Margin = new Thickness(smallLeftIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
                 }
@@ -215,20 +239,20 @@ namespace Snow.ReadTemplate
             }
         }
 
-        //private void UpdateHeaderMargin(Microsoft.UI.Xaml.Controls.NavigationView sender)
-        //{
-        //    if (PageHeader != null)
-        //    {
-        //        if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
-        //        {
-        //            Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderMinimalPadding"];
-        //        }
-        //        else
-        //        {
-        //            Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderDefaultPadding"];
-        //        }
-        //    }
-        //}
+        private void UpdateHeaderMargin(muxc.NavigationView sender)
+        {
+            if (PageHeader != null)
+            {
+                if (sender.DisplayMode == muxc.NavigationViewDisplayMode.Minimal)
+                {
+                    Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderMinimalPadding"];
+                }
+                else
+                {
+                    Current.PageHeader.HeaderPadding = (Thickness)App.Current.Resources["PageHeaderDefaultPadding"];
+                }
+            }
+        }
 
         private void NavView_OnBackRequested(muxc.NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
@@ -278,7 +302,6 @@ namespace Snow.ReadTemplate
                     ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
         }
-
-
+        
     }
 }

@@ -8,51 +8,53 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Padding="0,0,8,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="325" MaxWidth="500"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+        <RelativePanel>
+            <TextBlock
+                x:Name="PageTitle"
+                Text="Orders" />
+            <CommandBar
+            x:Name="mainCommandBar"
+            HorizontalAlignment="Stretch"
+            Background="Transparent"
+            Loaded="CommandBar_Loaded"
+            RelativePanel.AlignRightWithPanel="True">
+                <AppBarButton Click="Search_OnClick">
+                    <FontIcon
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="12"
+                    Glyph="&#xE11A;" />
+                </AppBarButton>
+                <AppBarButton
+                Click="Refresh_OnClick"
+                Icon="Refresh"/>
+            </CommandBar>
+        </RelativePanel>
 
         <FlipView Name="ArticleFv"
                   Grid.Column="0"
-                  Grid.Row="0">
+                  Grid.Row="1">
             <Image Source="/Assets/1.png" AutomationProperties.Name="Cliff"/>
             <Image Source="/Assets/2.png" AutomationProperties.Name="Grapes"/>
             <Image Source="/Assets/3.png" AutomationProperties.Name="Rainier"/>
         </FlipView>
-        <Frame Grid.Column="0" Grid.Row="1" Name="ListFrame" Padding="0,0,8,0"/>
+        <Frame Grid.Column="0" Grid.Row="2" Name="ListFrame"/>
 
-        <StackPanel Orientation="Horizontal" 
-                    Visibility="Collapsed"
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    HorizontalAlignment="Right">
-            <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Icon="Add" Label="Add"/>
-                <AppBarButton Icon="Edit" Label="Edit"/>
-                <AppBarButton Icon="Share" Label="Share"/>
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Icon="Setting" Label="Settings">
-                        <AppBarButton.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="Control" Key="I" />
-                        </AppBarButton.KeyboardAccelerators>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-            <!--<SymbolIcon Symbol="CalendarDay" />
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />-->
-        </StackPanel>
         <controls:GridSplitter
             GripperCursor="Default"
             HorizontalAlignment="Left"
             Grid.Column="1"
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Background="White"
             ResizeDirection="Auto"
             ResizeBehavior="BasedOnAlignment"

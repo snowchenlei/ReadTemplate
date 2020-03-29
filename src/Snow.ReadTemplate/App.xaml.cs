@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -112,6 +113,15 @@ namespace Snow.ReadTemplate
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
+        }
+
+        public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
+            }
+            return (TEnum)Enum.Parse(typeof(TEnum), text);
         }
     }
 }
