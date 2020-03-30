@@ -7,6 +7,7 @@ using Microsoft.Toolkit.Uwp;
 using Snow.ReadTemplate.Data;
 using Snow.ReadTemplate.Models;
 using Snow.ReadTemplate.Pages.Article;
+using Snow.ReadTemplate.Pages.Search;
 using Snow.ReadTemplate.ViewModels;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -78,7 +79,7 @@ namespace Snow.ReadTemplate
 
         private void Search_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            DetailFrame.Navigate(typeof(SearchIndex));
         }
 
         private void Refresh_OnClick(object sender, RoutedEventArgs e)

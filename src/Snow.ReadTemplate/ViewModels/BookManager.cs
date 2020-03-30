@@ -108,7 +108,7 @@ namespace Snow.ReadTemplate.Models
                 new ArticleViewModel {Id = 26, Title = "Aliquip", Author = "Magna", CoverImage = "Assets/13.png"}
             };
         }
-        public static async Task<IEnumerable<ArticleViewModel>> GetBooks(int pageIndex, int pageSize)
+        public static async Task<IEnumerable<ArticleViewModel>> GetBooks(int pageIndex, int pageSize, string query = "")
         {
             await Task.Delay(1000);
             int offset = pageIndex * pageSize;

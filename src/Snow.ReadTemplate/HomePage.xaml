@@ -69,7 +69,7 @@
                 <TranslateTransform X="-8" />
             </controls:GridSplitter.RenderTransform>
         </controls:GridSplitter>
-        <Frame Grid.Column="1" Grid.RowSpan="2" Name="DetailFrame" Padding="12,0,0,0"/>
+        <Frame Grid.Column="1" Grid.RowSpan="3" Name="DetailFrame" Padding="12,0,0,0"/>
     </Grid>
 
 </Page>

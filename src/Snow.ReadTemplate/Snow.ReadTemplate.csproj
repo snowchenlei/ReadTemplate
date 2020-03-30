@@ -133,6 +133,16 @@
     <Compile Include="PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Search\SearchIndex.xaml.cs">
+      <DependentUpon>SearchIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Search\SearchList.xaml.cs">
+      <DependentUpon>SearchList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CollapsibleSearchBox.xaml.cs">
+      <DependentUpon>CollapsibleSearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ArticleListViewModel.cs" />
     <Compile Include="ViewModels\ArticleViewModel.cs" />
     <Compile Include="ViewModels\BookManager.cs" />
     <Compile Include="MyContentPage.xaml.cs">
@@ -217,6 +227,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Search\SearchIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Search\SearchList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SamplePage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="UserControls\CollapsibleSearchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
