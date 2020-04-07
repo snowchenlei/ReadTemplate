@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Windows.System.Profile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

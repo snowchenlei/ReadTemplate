@@ -30,10 +30,6 @@ namespace Snow.ReadTemplate.Pages.Search
         {
             this.InitializeComponent();
             SearchHistories =new ObservableCollection<string>();
-            for (int i = 0; i < 20; i++)
-            {
-                SearchHistories.Add("你好" + i);
-            }
         }
 
         private void OrderSearchBox_OnLoaded(object sender, RoutedEventArgs e)
@@ -60,6 +56,11 @@ namespace Snow.ReadTemplate.Pages.Search
                 SearchResult.Visibility = Visibility.Collapsed;
                 WelcomeResult.Visibility = Visibility.Visible;
             }
+        }
+
+        private void Clear_OnClick(object sender, RoutedEventArgs e)
+        {
+            SearchHistories.Clear();
         }
     }
 }

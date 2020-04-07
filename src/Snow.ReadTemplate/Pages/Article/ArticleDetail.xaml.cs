@@ -30,7 +30,7 @@ namespace Snow.ReadTemplate.Pages.Article
             Title.Text = Article.Title;
             Author.Text = Article.Author;
             CreationTime.Text = Article.CreationTime;
-            Content.Text = Article.CoverImage;
+            Content.NavigateToString(Article.Description);
 
             NewDetailViewLoadingProgressRing.IsLoading = false;
         }
@@ -41,6 +41,12 @@ namespace Snow.ReadTemplate.Pages.Article
             {
                 _id = Convert.ToInt32(e.Parameter.ToString());
             }
+        }
+
+        private async void Content_OnNavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            Content.Height = Convert.ToInt32(await Content.InvokeScriptAsync("eval",
+                new string[] {"document.documentElement.scrollHeight.toString();"}));
         }
     }
 }

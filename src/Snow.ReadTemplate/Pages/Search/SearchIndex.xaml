@@ -29,14 +29,14 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <RelativePanel>
+            <RelativePanel Visibility="Collapsed">
                 <StackPanel Name="Se" Orientation="Horizontal">
                     <FontIcon FontFamily="Segoe MDL2 Assets" 
                               Glyph="&#xF738;" />
                     <TextBlock Text="搜索历史"/>
                 </StackPanel>
-                <TextBlock Text="清除记录"
-                           RelativePanel.AlignRightWithPanel="True"/>
+                <HyperlinkButton Content="清除记录" Click="Clear_OnClick"
+                                 RelativePanel.AlignRightWithPanel="True"/>
             </RelativePanel>
             <ListView ItemsSource="{x:Bind SearchHistories}" Grid.Row="1">
                 <ListView.ItemTemplate>

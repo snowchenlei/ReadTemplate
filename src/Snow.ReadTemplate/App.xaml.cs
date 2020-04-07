@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -76,6 +77,7 @@ namespace Snow.ReadTemplate
             }
 
             HideTitleBar();
+            ExtendAcrylicIntoTitleBar();
         }
 
         /// <summary>
@@ -89,6 +91,15 @@ namespace Snow.ReadTemplate
             //var appTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             //appTitleBar.ButtonBackgroundColor = Colors.Transparent;
             //appTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        }
+        /// <summary>
+        /// 标题栏Acrylic
+        /// </summary>
+        private void ExtendAcrylicIntoTitleBar()
+        {
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
 
         /// <summary>

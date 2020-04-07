@@ -70,7 +70,7 @@
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
             </muxc:NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame"/>
+            <Frame x:Name="ContentFrame" />
         </muxc:NavigationView>
     </Grid>
 </Page>
