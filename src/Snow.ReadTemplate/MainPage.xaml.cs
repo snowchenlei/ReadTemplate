@@ -69,10 +69,9 @@ namespace Snow.ReadTemplate
             Current = this;
             
             Window.Current.SetTitleBar(AppTitleBar);
-
-            CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
-
-            
+            ContentFrame.Navigate(typeof(HomePage));
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
         }
 
         private void AddNavigationMenuItems()
@@ -302,6 +301,17 @@ namespace Snow.ReadTemplate
                     ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
         }
-        
+
+        private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
+        {
+            if (e.SourcePageType == typeof(HomePage))
+            {
+                NavView.AlwaysShowHeader = false;
+            }
+            else
+            {
+                NavView.AlwaysShowHeader = true;
+            }
+        }
     }
 }

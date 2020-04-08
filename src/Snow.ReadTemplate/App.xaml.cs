@@ -72,10 +72,10 @@ namespace Snow.ReadTemplate
                     // 参数
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
+                
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
-
             HideTitleBar();
             ExtendAcrylicIntoTitleBar();
         }
@@ -87,11 +87,12 @@ namespace Snow.ReadTemplate
         {
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
+            
             //var appTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             //appTitleBar.ButtonBackgroundColor = Colors.Transparent;
             //appTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
+
         /// <summary>
         /// 标题栏Acrylic
         /// </summary>

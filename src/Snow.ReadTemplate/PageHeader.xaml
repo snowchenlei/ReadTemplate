@@ -11,41 +11,44 @@
     Background="Transparent"
     Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
     FontSize="24">
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <local:DeviceFamilyTrigger DeviceFamily="Windows.Xbox" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="headerControl.Padding" Value="24,15,48,0" />
+                        <Setter Target="headerControl.Height" Value="75" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <local:DeviceFamilyTrigger DeviceFamily="Windows.Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="headerControl.Padding" Value="14,0,14,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
 
-    <VisualStateManager.VisualStateGroups>
-        <VisualStateGroup>
-            <VisualState>
-                <VisualState.StateTriggers>
-                    <local:DeviceFamilyTrigger DeviceFamily="Windows.Xbox" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="headerControl.Padding" Value="24,15,48,0" />
-                    <Setter Target="headerControl.Height" Value="75" />
-                </VisualState.Setters>
-            </VisualState>
-            <VisualState>
-                <VisualState.StateTriggers>
-                    <local:DeviceFamilyTrigger DeviceFamily="Windows.Mobile" />
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
-                    <Setter Target="headerControl.Padding" Value="14,0,14,0" />
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
+            <VisualStateGroup x:Name="TitleForegroundStates">
+                <VisualState x:Name="DefaultForeground" />
+                <VisualState x:Name="AlternateForeground">
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
+                        <Setter Target="ShadowHost.Opacity" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Rectangle x:Name="NarrowBackground" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" />
 
-        <VisualStateGroup x:Name="TitleForegroundStates">
-            <VisualState x:Name="DefaultForeground" />
-            <VisualState x:Name="AlternateForeground">
-                <VisualState.Setters>
-                    <Setter Target="TitleTextBlock.Foreground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
-                    <Setter Target="ShadowHost.Opacity" Value="0"/>
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
+        <Rectangle x:Name="WideBackground" Fill="{Binding ElementName=headerControl, Path=Background}" Opacity="{Binding ElementName=headerControl, Path=BackgroundColorOpacity}" />
 
-    <Grid x:Name="headerRoot" Padding="{Binding ElementName=headerControl, Path=Padding}" VerticalAlignment="Top" MinHeight="64">
-        <TextBlock x:Name="TitleTextBlock"
+        <Grid x:Name="headerRoot" Padding="{Binding ElementName=headerControl, Path=Padding}" VerticalAlignment="Top" MinHeight="64">
+            <TextBlock x:Name="TitleTextBlock"
                Style="{StaticResource HeaderTextBlockStyle}"
                VerticalAlignment="Center"
                FontSize="{Binding ElementName=headerControl, Path=FontSize}"
@@ -54,4 +57,5 @@
                TextTrimming="CharacterEllipsis"
                TextWrapping="NoWrap" />
         </Grid>
+    </Grid>
 </UserControl>
