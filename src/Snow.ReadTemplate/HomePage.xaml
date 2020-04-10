@@ -5,29 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:local="using:Snow.ReadTemplate"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlChromeMediumLowAcrylicWindowMediumBrush}">
+    Background="{ThemeResource HomePageBackgroundBrush}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="325" MaxWidth="500"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto" ></RowDefinition>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <RelativePanel Padding="0,0,7,0">
-            <TextBlock
-                x:Name="PageTitle"
-                Text="Orders" />
-            <CommandBar
-            x:Name="mainCommandBar"
-            HorizontalAlignment="Stretch"
-            Background="Transparent"
-            Loaded="CommandBar_Loaded"
-            RelativePanel.AlignRightWithPanel="True">
+        <RelativePanel>
+            <TextBlock x:Name="PageTitle"
+                       Visibility="Collapsed"
+                       Text="Orders" />
+            <CommandBar x:Name="mainCommandBar"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        Loaded="CommandBar_Loaded"
+                        Canvas.ZIndex="999"
+                        RelativePanel.AlignRightWithPanel="True">
                 <AppBarButton Click="Search_OnClick">
                     <FontIcon
                     FontFamily="Segoe MDL2 Assets"
@@ -41,36 +42,35 @@
         </RelativePanel>
 
         <FlipView Name="ArticleFv"
-                  Margin="0,0,8,0"
                   Grid.Column="0"
                   Grid.Row="1">
             <Image Source="/Assets/1.png" AutomationProperties.Name="Cliff"/>
             <Image Source="/Assets/2.png" AutomationProperties.Name="Grapes"/>
             <Image Source="/Assets/3.png" AutomationProperties.Name="Rainier"/>
         </FlipView>
-        <Frame Grid.Column="0" Grid.Row="2" Name="ListFrame" Padding="0,0,7,0"/>
+        <Frame Grid.Column="0" Grid.Row="2" Name="ListFrame"/>
 
         <controls:GridSplitter
+            x:Name="GridSplitter"
+            Canvas.ZIndex="1"
             GripperCursor="Default"
             HorizontalAlignment="Left"
             Grid.Column="1"
-            Grid.Row="0"
             Grid.RowSpan="3"
-            Background="{ThemeResource SystemControlChromeMediumLowAcrylicWindowMediumBrush}"
+            Background="{ThemeResource HomePageBackgroundBrush}"
             ResizeDirection="Auto"
             ResizeBehavior="BasedOnAlignment"
-            CursorBehavior="ChangeOnSplitterHover"
-            Width="10">
+            CursorBehavior="ChangeOnSplitterHover">
             <!--<controls:GridSplitter.Element>
                 <TextBlock HorizontalAlignment="Center"  IsHitTestVisible="False"
                            VerticalAlignment="Center" Text="&#xE784;"
                            Foreground="Black" FontFamily="Segoe MDL2 Assets"/>
             </controls:GridSplitter.Element>-->
             <controls:GridSplitter.RenderTransform>
-                <TranslateTransform X="-8" />
+                <TranslateTransform X="0" />
             </controls:GridSplitter.RenderTransform>
         </controls:GridSplitter>
-        <Frame Grid.Column="1" Grid.RowSpan="3" Name="DetailFrame" Margin="8,0,0,0"/>
+        <Frame Grid.Column="1" Grid.RowSpan="3" Name="DetailFrame" Margin="10,32,0,0"/>
     </Grid>
 
 </Page>

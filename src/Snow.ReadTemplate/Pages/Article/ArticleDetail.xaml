@@ -9,24 +9,26 @@
     Loaded="NewDetail_OnLoaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <ScrollViewer>
-            <StackPanel Margin="20">
-                <TextBlock Name="Title" 
-                           TextWrapping="Wrap"
-                           FontWeight="Bold" 
-                           FontSize="24"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Name="CreationTime" Margin="0,0,20,0"></TextBlock>
-                    <TextBlock Name="Author"></TextBlock>
-                </StackPanel>
-                <Rectangle Height="1" Fill="Black"></Rectangle>
-                <!--<TextBlock Name="Content"></TextBlock>-->
-                <WebView Name="Content"
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
+            <TextBlock Name="Title" 
+                               TextWrapping="Wrap"
+                               FontWeight="Bold" 
+                               FontSize="24"></TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="CreationTime" Margin="0,0,20,0"></TextBlock>
+                <TextBlock Name="Author"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <WebView Name="Content"
                          Width="200"
                          ScrollViewer.HorizontalScrollMode="Disabled"
                          NavigationCompleted="Content_OnNavigationCompleted"/>
-            </StackPanel>
         </ScrollViewer>
 
         <controls:Loading x:Name="NewDetailViewLoadingProgressRing"

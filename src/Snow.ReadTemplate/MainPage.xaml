@@ -6,8 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:Snow.ReadTemplate"
-    mc:Ignorable="d"
-    Background="{ThemeResource SystemControlChromeMediumLowAcrylicWindowMediumBrush}">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <DataTemplate x:Key="NavigationViewHeaderTemplate">
@@ -27,12 +26,12 @@
                 IsHitTestVisible="True"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                Height="{Binding ElementName=NavView, Path=CompactPaneLength}"
+                Height="{x:Bind NavView.CompactPaneLength}"                
                 Canvas.ZIndex="1">
             <TextBlock x:Name="AppTitle"
                        VerticalAlignment="Center"
                        Style="{StaticResource CaptionTextBlockStyle}" />
-        </Border>        
+        </Border>
         <muxc:NavigationView x:Name="NavView"
                             Canvas.ZIndex="0"
                             Grid.Column="1"
@@ -68,8 +67,9 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
-            </muxc:NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" Navigated="OnRootFrameNavigated" />
-        </muxc:NavigationView>        
+            </muxc:NavigationView.MenuItems>            
+            <Frame x:Name="ContentFrame" Navigated="OnRootFrameNavigated"  />
+        </muxc:NavigationView>
+
     </Grid>            
 </Page>

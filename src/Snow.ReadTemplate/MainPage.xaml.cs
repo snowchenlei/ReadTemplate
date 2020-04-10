@@ -35,6 +35,8 @@ namespace Snow.ReadTemplate
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+
         public static MainPage Current;
         private PageHeader _header;
 
@@ -68,10 +70,9 @@ namespace Snow.ReadTemplate
             AddNavigationMenuItems();
             Current = this;
             
-            Window.Current.SetTitleBar(AppTitleBar);
+            Window.Current.SetTitleBar(AppTitleBar);            
             ContentFrame.Navigate(typeof(HomePage));
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);
+            coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);   
         }
 
         private void AddNavigationMenuItems()

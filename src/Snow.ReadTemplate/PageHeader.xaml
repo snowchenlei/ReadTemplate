@@ -11,7 +11,7 @@
     Background="Transparent"
     Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
     FontSize="24">
-    <Grid>
+    <Grid >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

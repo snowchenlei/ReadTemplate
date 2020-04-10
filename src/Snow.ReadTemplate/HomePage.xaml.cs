@@ -10,6 +10,8 @@ using Snow.ReadTemplate.Models;
 using Snow.ReadTemplate.Pages.Article;
 using Snow.ReadTemplate.Pages.Search;
 using Snow.ReadTemplate.ViewModels;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml.Media;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -21,6 +23,7 @@ namespace Snow.ReadTemplate
     public sealed partial class HomePage : Page
     {
         private MainViewModel ViewModel => MainPage.Current.ViewModel;
+        private CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 
         public HomePage()
         {
@@ -87,5 +90,6 @@ namespace Snow.ReadTemplate
         {
             ArticleList.Current.RefreshAsync();
         }
+
     }
 }
