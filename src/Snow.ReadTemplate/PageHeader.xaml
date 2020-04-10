@@ -43,7 +43,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Rectangle x:Name="NarrowBackground" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed" />
+        <Rectangle x:Name="NarrowBackground" Fill="{ThemeResource HomePageBackgroundBrush}" Visibility="Collapsed" />
 
         <Rectangle x:Name="WideBackground" Fill="{Binding ElementName=headerControl, Path=Background}" Opacity="{Binding ElementName=headerControl, Path=BackgroundColorOpacity}" />
 
@@ -57,5 +57,26 @@
                TextTrimming="CharacterEllipsis"
                TextWrapping="NoWrap" />
         </Grid>
+
+        <RelativePanel Padding="{Binding ElementName=headerControl, Path=Padding}">
+            <CommandBar x:Name="mainCommandBar"
+                        Width="20"
+                        OverflowButtonVisibility="Collapsed"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        Loaded="CommandBar_Loaded"
+                        RelativePanel.AlignRightWithPanel="True">
+                <AppBarButton Click="Search_OnClick">
+                    <FontIcon
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="12"
+                        Glyph="&#xE11A;" />
+                </AppBarButton>
+                <AppBarButton
+                    Click="Refresh_OnClick"
+                    Icon="Refresh"/>
+            </CommandBar>
+        </RelativePanel>
+
     </Grid>
 </UserControl>

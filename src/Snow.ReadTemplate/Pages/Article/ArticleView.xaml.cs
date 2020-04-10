@@ -1,34 +1,31 @@
 ﻿using System;
-using System.ComponentModel;
-using Windows.System.Profile;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Microsoft.Toolkit.Uwp;
-using Snow.ReadTemplate.Data;
-using Snow.ReadTemplate.Models;
-using Snow.ReadTemplate.Pages.Article;
-using Snow.ReadTemplate.Pages.Search;
-using Snow.ReadTemplate.ViewModels;
-using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
-namespace Snow.ReadTemplate
+namespace Snow.ReadTemplate.Pages.Article
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class ArticleView : Page
     {
-        private MainViewModel ViewModel => MainPage.Current.ViewModel;
-        private CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-
-        public HomePage()
+        public ArticleView()
         {
             this.InitializeComponent();
-            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+
             ListFrame.Navigate(typeof(ArticleList));
 
             DispatcherTimer time = new DispatcherTimer
@@ -51,21 +48,6 @@ namespace Snow.ReadTemplate
             ArticleFv.SelectedIndex = i;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            //var menuItem = MainPage.Current.NavigationView.MenuItems.Cast<Microsoft.UI.Xaml.Controls.NavigationViewItem>().ElementAt(1);
-            //menuItem.IsSelected = true;
-            MainPage.Current.NavigationView.Header = string.Empty;
-
-            //Items = ControlInfoDataSource.Instance.Groups.SelectMany(g => g.Items).OrderBy(i => i.Title).ToList();
-        }
-
-        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            ArticleViewModel article = ViewModel.CurrentArticle;
-            DetailFrame.Navigate(typeof(ArticleDetail), article.Id);
-        }
-
         /// <summary>
         /// Workaround to support earlier versions of Windows. 
         /// </summary>
@@ -83,13 +65,12 @@ namespace Snow.ReadTemplate
 
         private void Search_OnClick(object sender, RoutedEventArgs e)
         {
-            DetailFrame.Navigate(typeof(SearchIndex));
+            //DetailFrame.Navigate(typeof(SearchIndex));
         }
 
         private void Refresh_OnClick(object sender, RoutedEventArgs e)
         {
             ArticleList.Current.RefreshAsync();
         }
-
     }
 }

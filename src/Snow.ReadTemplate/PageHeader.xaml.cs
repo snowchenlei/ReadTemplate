@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Controls;
+using Snow.ReadTemplate.Pages.Article;
+using Snow.ReadTemplate.Pages.Search;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
@@ -60,6 +62,31 @@ namespace Snow.ReadTemplate
         public PageHeader()
         {
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Workaround to support earlier versions of Windows. 
+        /// </summary>
+        private void CommandBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (false)//(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Bottom;
+            }
+            else
+            {
+                (sender as CommandBar).DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
+            }
+        }
+
+        private void Search_OnClick(object sender, RoutedEventArgs e)
+        {
+            MasterDetailPage.Current.MasterDetailFrame.Navigate(typeof(SearchIndex));
+        }
+
+        private void Refresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            ArticleList.Current.RefreshAsync();
         }
     }
 }

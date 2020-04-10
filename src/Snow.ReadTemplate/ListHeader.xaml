@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="Snow.ReadTemplate.ListHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Snow.ReadTemplate"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <RelativePanel AlignVerticalCenterWithPanel="True">
+        <TextBlock x:Name="PageTitle"
+                   Height="{x:Bind MainCommandBar.Height}"
+                   Text="Orders1" />
+        <CommandBar x:Name="MainCommandBar"
+                    OverflowButtonVisibility="Collapsed"
+                    HorizontalAlignment="Stretch"
+                    Background="Transparent"
+                    RelativePanel.AlignRightWithPanel="True">
+            <AppBarButton>
+                <FontIcon
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="12"
+                    Glyph="&#xE11A;" />
+            </AppBarButton>
+            <AppBarButton
+                Icon="Refresh"/>
+        </CommandBar>
+    </RelativePanel>
+</UserControl>

@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Snow.ReadTemplate.Common;
+using Snow.ReadTemplate.Pages.Article;
 using Snow.ReadTemplate.ViewModels;
 using muxc = Microsoft.UI.Xaml.Controls;
 using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
@@ -33,11 +34,11 @@ namespace Snow.ReadTemplate
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class NavigationRootPage : Page
     {
         private CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
 
-        public static MainPage Current;
+        public static NavigationRootPage Current;
         private PageHeader _header;
 
         public MainViewModel ViewModel { get; } = new MainViewModel();
@@ -60,18 +61,18 @@ namespace Snow.ReadTemplate
 
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
-            ("home", typeof(HomePage)),
+            ("home", typeof(MasterDetailPage)),
             ("SamplePage2", typeof(SamplePage2))
         };
 
-        public MainPage()
+        public NavigationRootPage()
         {
             this.InitializeComponent();
             AddNavigationMenuItems();
             Current = this;
             
             Window.Current.SetTitleBar(AppTitleBar);            
-            ContentFrame.Navigate(typeof(HomePage));
+            ContentFrame.Navigate(typeof(MasterDetailPage));
             coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle(s);   
         }
 
@@ -99,9 +100,6 @@ namespace Snow.ReadTemplate
         
         private void NavView_OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Add handler for ContentFrame navigation.
-            ContentFrame.Navigated += On_Navigated;
-
             // NavView doesn't load any page by default, so load home page.
             NavView.SelectedItem = NavView.MenuItems[0];
 
@@ -156,6 +154,10 @@ namespace Snow.ReadTemplate
 
         private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
         {
+            ContentFrame.Navigate(typeof(MasterDetailPage), navItemTag, transitionInfo);
+            return;
+
+
             Type _page = null;
             if (navItemTag == "settings")
             {
@@ -305,7 +307,17 @@ namespace Snow.ReadTemplate
 
         private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
-            if (e.SourcePageType == typeof(HomePage))
+            if (ContentFrame.SourcePageType == typeof(SettingsPage))
+            {
+                // SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
+                NavView.SelectedItem = (muxc.NavigationViewItem)NavView.SettingsItem;
+                NavView.Header = "Settings";
+            }
+            else
+            {
+                NavView.Header = ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
+            }
+            if (new List<Type>() { typeof(MasterDetailPage) , typeof(ArticleDetail)}.Contains(e.SourcePageType))
             {
                 NavView.AlwaysShowHeader = false;
             }

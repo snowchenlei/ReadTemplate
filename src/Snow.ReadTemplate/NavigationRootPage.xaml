@@ -1,22 +1,23 @@
 ﻿<Page
-    x:Class="Snow.ReadTemplate.MainPage"
+    x:Class="Snow.ReadTemplate.NavigationRootPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:local="using:Snow.ReadTemplate"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
         <DataTemplate x:Key="NavigationViewHeaderTemplate">
             <local:PageHeader
                 Title="{Binding}"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                Background="{ThemeResource HomePageBackgroundBrush}"
                 BackgroundColorOpacity="1" />
         </DataTemplate>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource HomePageBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
@@ -26,31 +27,32 @@
                 IsHitTestVisible="True"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                Height="{x:Bind NavView.CompactPaneLength}"                
+                Height="{x:Bind NavView.CompactPaneLength}"
                 Canvas.ZIndex="1">
             <TextBlock x:Name="AppTitle"
                        VerticalAlignment="Center"
                        Style="{StaticResource CaptionTextBlockStyle}" />
         </Border>
+        
         <muxc:NavigationView x:Name="NavView"
-                            Canvas.ZIndex="0"
-                            Grid.Column="1"
-                            Language="zh-cn"
-                            IsTabStop="False"
-                            Header=" "
-                            HeaderTemplate="{StaticResource NavigationViewHeaderTemplate}"
-                            IsTitleBarAutoPaddingEnabled="False"
-                            IsBackEnabled="True"
-                            IsSettingsVisible="True"
-                            IsPaneOpen="False"
-                            AlwaysShowHeader="True"
-                            Loaded="NavView_OnLoaded"
-                            BackRequested="NavView_OnBackRequested"
-                            PaneClosing="NavView_OnPaneClosing"
-                            PaneOpening="NavView_OnPaneOpening"
-                            DisplayModeChanged="NavView_OnDisplayModeChanged"
-                            SelectionChanged="NavView_OnSelectionChanged"
-                            ItemInvoked="NavView_OnItemInvoked">
+                             Canvas.ZIndex="0"
+                             Grid.Column="1"
+                             Language="zh-cn"
+                             IsTabStop="False"
+                             Header=" "
+                             HeaderTemplate="{StaticResource NavigationViewHeaderTemplate}"
+                             IsTitleBarAutoPaddingEnabled="False"
+                             IsBackEnabled="True"
+                             IsSettingsVisible="True"
+                             IsPaneOpen="False"
+                             AlwaysShowHeader="True"
+                             Loaded="NavView_OnLoaded"
+                             BackRequested="NavView_OnBackRequested"
+                             PaneClosing="NavView_OnPaneClosing"
+                             PaneOpening="NavView_OnPaneOpening"
+                             DisplayModeChanged="NavView_OnDisplayModeChanged"
+                             SelectionChanged="NavView_OnSelectionChanged"
+                             ItemInvoked="NavView_OnItemInvoked">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Tag="home" Icon="Home" Content="首页"/>
                 <muxc:NavigationViewItemSeparator/>
@@ -67,9 +69,8 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
-            </muxc:NavigationView.MenuItems>            
+            </muxc:NavigationView.MenuItems>
             <Frame x:Name="ContentFrame" Navigated="OnRootFrameNavigated"  />
         </muxc:NavigationView>
-
     </Grid>            
 </Page>

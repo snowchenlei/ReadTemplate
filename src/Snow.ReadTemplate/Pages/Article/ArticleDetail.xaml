@@ -6,32 +6,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Loaded="NewDetail_OnLoaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Loaded="ArticleDetail_OnLoaded">
 
-    <Grid Margin="20">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
-            <TextBlock Name="Title" 
-                               TextWrapping="Wrap"
-                               FontWeight="Bold" 
-                               FontSize="24"></TextBlock>
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Padding="0,0,0,20" Margin="20,0,20,20" BorderBrush="DarkGray" BorderThickness="0,0,0,1">
+            <TextBlock Name="Title"
+                       Margin="0,0,0,10"
+                       TextWrapping="Wrap"
+                       FontWeight="Bold" 
+                       FontSize="24"></TextBlock>
+            <StackPanel Orientation="Horizontal" >
                 <TextBlock Name="CreationTime" Margin="0,0,20,0"></TextBlock>
                 <TextBlock Name="Author"></TextBlock>
             </StackPanel>
         </StackPanel>
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" Padding="20,0,20,0">
             <WebView Name="Content"
-                         Width="200"
-                         ScrollViewer.HorizontalScrollMode="Disabled"
-                         NavigationCompleted="Content_OnNavigationCompleted"/>
+                     ScrollViewer.HorizontalScrollMode="Disabled"
+                     NavigationCompleted="Content_OnNavigationCompleted"/>
         </ScrollViewer>
 
-        <controls:Loading x:Name="NewDetailViewLoadingProgressRing"
+        <controls:Loading x:Name="ArticleDetailViewLoadingProgressRing"
                           VerticalAlignment="Center"
                           HorizontalContentAlignment="Center"
                           VerticalContentAlignment="Center">

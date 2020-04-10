@@ -15,7 +15,7 @@ namespace Snow.ReadTemplate.Pages.Article
     /// </summary>
     public sealed partial class ArticleList : Page
     {
-        public MainViewModel ViewModel => MainPage.Current.ViewModel;
+        public MainViewModel ViewModel => NavigationRootPage.Current.ViewModel;
         public static ArticleList Current;
         public ArticleList()
         {
