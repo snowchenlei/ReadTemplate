@@ -12,7 +12,7 @@
     <Page.Resources>
         <DataTemplate x:Key="NavigationViewHeaderTemplate">
             <local:PageHeader
-                Title="{Binding}"
+                 Title="{Binding}"
                 Background="{ThemeResource HomePageBackgroundBrush}"
                 BackgroundColorOpacity="1" />
         </DataTemplate>
@@ -39,13 +39,11 @@
                              Grid.Column="1"
                              Language="zh-cn"
                              IsTabStop="False"
-                             Header=" "
-                             HeaderTemplate="{StaticResource NavigationViewHeaderTemplate}"
                              IsTitleBarAutoPaddingEnabled="False"
                              IsBackEnabled="True"
                              IsSettingsVisible="True"
                              IsPaneOpen="False"
-                             AlwaysShowHeader="True"
+                             AlwaysShowHeader="False"
                              Loaded="NavView_OnLoaded"
                              BackRequested="NavView_OnBackRequested"
                              PaneClosing="NavView_OnPaneClosing"

@@ -5,10 +5,10 @@
     xmlns:local="using:Snow.ReadTemplate"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d"    
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Margin="0,40,0,0">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition />
@@ -33,13 +33,20 @@
         </VisualStateManager.VisualStateGroups>
         <ScrollViewer
             x:Name="contentSV"
-            Grid.Row="1"
-            Padding="20,0,0,0"
+            Grid.Row="1"            
             IsTabStop="False"
             UseSystemFocusVisuals="False"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Auto">
             <StackPanel HorizontalAlignment="Left">
+                <Border BorderBrush="Blue"
+                        BorderThickness="4,0,0,0"
+                        Padding="10,0,0,0">
+                    <TextBlock Text="设置"
+                               FontSize="18"
+                               Foreground="Blue"/>
+                </Border>
+                <StackPanel Padding="20,10,0,0">
                 <TextBlock
                     Style="{StaticResource TitleTextBlockStyle}"
                     Margin="0,4,0,0"
@@ -116,6 +123,7 @@
                         <Hyperlink NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839">Microsoft Privacy Statement</Hyperlink>
                     </Paragraph>
                 </RichTextBlock>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

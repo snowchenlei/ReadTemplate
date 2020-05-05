@@ -16,14 +16,16 @@
                     HorizontalAlignment="Stretch"
                     Background="Transparent"
                     RelativePanel.AlignRightWithPanel="True">
-            <AppBarButton>
+            <AppBarButton Click="Search_OnClick">
                 <FontIcon
                     FontFamily="Segoe MDL2 Assets"
-                    FontSize="12"
                     Glyph="&#xE11A;" />
             </AppBarButton>
-            <AppBarButton
-                Icon="Refresh"/>
+            <AppBarButton Icon="Refresh"
+                          Click="Refresh_OnClick"/>
+            <AppBarButton Click="Top_OnClick">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE11C;" />
+            </AppBarButton>
         </CommandBar>
     </RelativePanel>
 </UserControl>

@@ -28,7 +28,7 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
-            <Thickness x:Key="PageHeaderDefaultPadding">12,28,12,0</Thickness>
+            <Thickness x:Key="PageHeaderDefaultPadding">12,0,12,0</Thickness>
             <Thickness x:Key="PageHeaderMinimalPadding">-4,0,12,0</Thickness>
         </ResourceDictionary>
     </Application.Resources>

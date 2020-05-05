@@ -42,13 +42,10 @@ namespace Snow.ReadTemplate
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string navItemTag = e.Parameter as string;
+            
             if (navItemTag == "home")
             {
                 MasterFrame.Navigate(typeof(ArticleView));
-            }
-            else if(navItemTag == "settings")
-            {
-                DetailFrame.Navigate(typeof(SettingsPage));
             }
         }
 

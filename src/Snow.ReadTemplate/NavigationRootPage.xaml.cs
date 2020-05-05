@@ -154,10 +154,6 @@ namespace Snow.ReadTemplate
 
         private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
         {
-            ContentFrame.Navigate(typeof(MasterDetailPage), navItemTag, transitionInfo);
-            return;
-
-
             Type _page = null;
             if (navItemTag == "settings")
             {
@@ -165,18 +161,23 @@ namespace Snow.ReadTemplate
             }
             else
             {
-                var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-                _page = item.Page;
+                _page = typeof(MasterDetailPage);
             }
-            // Get the page type before navigation so you can prevent duplicate
-            // entries in the backstack.
-            var preNavPageType = ContentFrame.CurrentSourcePageType;
+            ContentFrame.Navigate(_page, null, transitionInfo);
+            //else
+            //{
+            //    var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
+            //    _page = item.Page;
+            //}
+            //// Get the page type before navigation so you can prevent duplicate
+            //// entries in the backstack.
+            //var preNavPageType = ContentFrame.CurrentSourcePageType;
 
-            // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
-            {
-                ContentFrame.Navigate(_page, null, transitionInfo);
-            }
+            //// Only navigate if the selected page isn't currently loaded.
+            //if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            //{
+            //    ContentFrame.Navigate(_page, null, transitionInfo);
+            //}
         }
 
         private void NavView_OnPaneClosing(muxc.NavigationView sender, NavigationViewPaneClosingEventArgs args)
@@ -311,19 +312,19 @@ namespace Snow.ReadTemplate
             {
                 // SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
                 NavView.SelectedItem = (muxc.NavigationViewItem)NavView.SettingsItem;
-                NavView.Header = "Settings";
+                //NavView.Header = "Settings";
             }
             else
             {
-                NavView.Header = ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
+                //NavView.Header = String.Empty;// ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
             }
             if (new List<Type>() { typeof(MasterDetailPage) , typeof(ArticleDetail)}.Contains(e.SourcePageType))
             {
-                NavView.AlwaysShowHeader = false;
+                //NavView.AlwaysShowHeader = false;
             }
             else
             {
-                NavView.AlwaysShowHeader = true;
+                //NavView.AlwaysShowHeader = true;
             }
         }
     }

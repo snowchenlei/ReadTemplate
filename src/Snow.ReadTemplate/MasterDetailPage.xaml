@@ -23,6 +23,7 @@
                         <Setter Target="DetailColumn.Width" Value="*" />
                         <Setter Target="GridSplitter.Visibility" Value="Visible" />
                         <Setter Target="MasterFrame.Margin" Value="0,34,16,0"/>
+                        <Setter Target="DetailFrame.Margin" Value="0,34,0,0"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowState">
@@ -30,16 +31,9 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MasterFrame.Margin" Value="0,34,0,0"/>
+                        <Setter Target="MasterFrame.Margin" Value="0,40,0,0"/>
+                        <Setter Target="DetailFrame.Margin" Value="0,40,0,0"/>
                     </VisualState.Setters>
-                    <!--<VisualState.Setters>
-                        <Setter Target="MasterColumn.Width"
-                                Value="*" />
-                        <Setter Target="MasterColumn.MaxWidth"
-                                Value="720" />
-                        <Setter Target="DetailColumn.Width"
-                                Value="0" />
-                    </VisualState.Setters>-->
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
@@ -48,7 +42,7 @@
             <ColumnDefinition x:Name="DetailColumn" Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Frame Grid.Column="0" Name="MasterFrame" Margin="0,34,16,0"/>
+        <Frame Grid.Column="0" Name="MasterFrame"/>
 
         <controls:GridSplitter
             x:Name="GridSplitter"

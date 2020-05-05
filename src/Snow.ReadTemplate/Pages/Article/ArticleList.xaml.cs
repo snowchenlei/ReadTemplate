@@ -53,7 +53,13 @@ namespace Snow.ReadTemplate.Pages.Article
         public async void RefreshAsync()
         {
             var collection = (IncrementalLoadingCollection<ArticleSource, ArticleViewModel>)ArticlesListView.ItemsSource;
-            await collection.RefreshAsync();
+            await collection?.RefreshAsync();
         }
+
+        public void GoTop()
+        {
+            ArticlesListView.ScrollIntoView(((IncrementalLoadingCollection<ArticleSource, ArticleViewModel>)ArticlesListView.ItemsSource)[0]);
+        }
+
     }
 }

@@ -14,7 +14,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local:ListHeader />
+        <local:ListHeader x:Name="Lis" 
+                          Refresh="Refresh_OnClick"
+                          GoTop="Top_OnClick"/>
 
         <FlipView Name="ArticleFv"
                   Grid.Row="1">

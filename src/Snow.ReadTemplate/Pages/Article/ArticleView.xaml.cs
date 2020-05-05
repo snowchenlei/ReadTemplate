@@ -72,5 +72,10 @@ namespace Snow.ReadTemplate.Pages.Article
         {
             ArticleList.Current.RefreshAsync();
         }
+
+        private void Top_OnClick(object sender, RoutedEventArgs e)
+        {
+            ArticleList.Current.GoTop();
+        }
     }
 }

@@ -6,13 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Loaded="ArticleDetail_OnLoaded">
-
+    Loaded="ArticleDetail_OnLoaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="0" Padding="0,0,0,20" Margin="20,0,20,20" BorderBrush="DarkGray" BorderThickness="0,0,0,1">
             <TextBlock Name="Title"
                        Margin="0,0,0,10"
@@ -24,11 +25,20 @@
                 <TextBlock Name="Author"></TextBlock>
             </StackPanel>
         </StackPanel>
-        <ScrollViewer Grid.Row="1" Padding="20,0,20,0">
+
+        <ScrollViewer Grid.Row="1" Padding="20,0,20,40" x:Name="ScrollContent" ViewChanged="ScrollContent_ViewChanged">
             <WebView Name="Content"
-                     ScrollViewer.HorizontalScrollMode="Disabled"
-                     NavigationCompleted="Content_OnNavigationCompleted"/>
+                     CanBeScrollAnchor="True"
+                         NavigationCompleted="Content_OnNavigationCompleted"/>
         </ScrollViewer>
+
+        <Border Background="{ThemeResource HomePageBackgroundBrush}" Grid.Row="1" Height="40" VerticalAlignment="Bottom">
+            <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
+                <AppBarButton Click="Top_Click" Label="回到顶部">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE11C;" />
+                </AppBarButton>
+            </CommandBar>
+        </Border>
 
         <controls:Loading x:Name="ArticleDetailViewLoadingProgressRing"
                           VerticalAlignment="Center"
@@ -45,5 +55,5 @@
             </StackPanel>
         </controls:Loading>
     </Grid>
-    
+
 </Page>

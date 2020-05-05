@@ -45,7 +45,7 @@ namespace Snow.ReadTemplate
         // Using a DependencyProperty as the backing store for BackgroundColorOpacity.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HeaderPaddingProperty =
             DependencyProperty.Register("HeaderPadding", typeof(Thickness), typeof(PageHeader), new PropertyMetadata((Thickness)App.Current.Resources["PageHeaderDefaultPadding"]));
-        
+
         public double BackgroundColorOpacity
         {
             get { return (double)GetValue(BackgroundColorOpacityProperty); }
