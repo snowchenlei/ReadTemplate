@@ -66,26 +66,27 @@ namespace Snow.ReadTemplate
 
             if (isNarrow && oldState == DefaultState)
             {
-                GridSplitter.Visibility = Visibility.Collapsed;
-                if (DetailFrame.CurrentSourcePageType != null)
-                {
-                    MasterColumn.MinWidth = 0;
-                    MasterColumn.Width = new GridLength(0);
-                    DetailColumn.Width = new GridLength(1, GridUnitType.Star);
-                    //DetailColumn.Width = new GridLength(1, GridUnitType.Star);
-                    //MasterColumn.Width = new GridLength(0, GridUnitType.Star);
-                    //MasterColumn.MinWidth = 0;
-                }
-                else
-                {
-                    DetailColumn.Width = new GridLength(0);
-                    MasterColumn.MaxWidth = 720;
-                    MasterColumn.Width = new GridLength(1, GridUnitType.Star);
-                    //Frame.Navigate(MasterFrame.SourcePageType, null, new SuppressNavigationTransitionInfo());
+                Frame.Navigate(DetailFrame.SourcePageType, null, new SuppressNavigationTransitionInfo());
+                //GridSplitter.Visibility = Visibility.Collapsed;
+                //if (DetailFrame.CurrentSourcePageType != null)
+                //{
+                //    MasterColumn.MinWidth = 0;
+                //    MasterColumn.Width = new GridLength(0);
+                //    DetailColumn.Width = new GridLength(1, GridUnitType.Star);
+                //    //DetailColumn.Width = new GridLength(1, GridUnitType.Star);
+                //    //MasterColumn.Width = new GridLength(0, GridUnitType.Star);
+                //    //MasterColumn.MinWidth = 0;
+                //}
+                //else
+                //{
+                //    DetailColumn.Width = new GridLength(0);
+                //    MasterColumn.MaxWidth = 720;
+                //    MasterColumn.Width = new GridLength(1, GridUnitType.Star);
+                //    //Frame.Navigate(MasterFrame.SourcePageType, null, new SuppressNavigationTransitionInfo());
 
-                    //DetailColumn.Width = new GridLength(0, GridUnitType.Star);
-                    //MasterColumn.Width = new GridLength(1, GridUnitType.Star);
-                }
+                //    //DetailColumn.Width = new GridLength(0, GridUnitType.Star);
+                //    //MasterColumn.Width = new GridLength(1, GridUnitType.Star);
+                //}
             }
         }
     }
