@@ -53,6 +53,7 @@ namespace Snow.ReadTemplate
         {
             ArticleViewModel article = ViewModel.CurrentArticle;
             DetailFrame.Navigate(typeof(ArticleDetail), article.Id);
+            UpdateForVisualState(AdaptiveStates.CurrentState);
         }
 
         private void AdaptiveStates_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
@@ -60,13 +61,27 @@ namespace Snow.ReadTemplate
             UpdateForVisualState(e.NewState, e.OldState);
         }
 
-        private void UpdateForVisualState(VisualState newState, VisualState oldState)
+        private void UpdateForVisualState(VisualState newState, VisualState oldState = null)
         {
+            if (DetailFrame.CurrentSourcePageType != null)
+            {
+                ((Setter)NarrowState.Setters[1]).Value = "0";
+                ((Setter)NarrowState.Setters[2]).Value = "0";
+                ((Setter)NarrowState.Setters[3]).Value = "*";
+            }
+            else
+            {
+                ((Setter)NarrowState.Setters[1]).Value = "720";
+                ((Setter)NarrowState.Setters[2]).Value = "*";
+                ((Setter)NarrowState.Setters[3]).Value = "0";
+            }
             var isNarrow = newState == NarrowState;
 
             if (isNarrow && oldState == DefaultState)
-            {
-                Frame.Navigate(DetailFrame.SourcePageType, null, new SuppressNavigationTransitionInfo());
+            {                
+                //NarrowState.Setters.Remove()
+                //NarrowState.Setters[0]
+                //Frame.Navigate(DetailFrame.SourcePageType, null, new SuppressNavigationTransitionInfo());
                 //GridSplitter.Visibility = Visibility.Collapsed;
                 //if (DetailFrame.CurrentSourcePageType != null)
                 //{

@@ -20,7 +20,8 @@
                     <VisualState.Setters>
                         <!--<Setter Target="MasterColumn.MinWidth" Value="350" />
                         <Setter Target="MasterColumn.MaxWidth" Value="500" />
-                        --><!--<Setter Target="MasterColumn.Width" Value="Auto" />-->
+                        -->
+                        <!--<Setter Target="MasterColumn.Width" Value="Auto" />-->
                         <!--<Setter Target="DetailColumn.Width" Value="*" />-->
                         <!--<Setter Target="GridSplitter.Visibility" Value="Visible" />-->
                         <Setter Target="MasterFrame.Margin" Value="0,34,16,0"/>
@@ -32,6 +33,7 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="MasterColumn.MinWidth" Value="0" />
                         <Setter Target="MasterColumn.MaxWidth" Value="720" />
                         <Setter Target="MasterColumn.Width" Value="*" />
                         <Setter Target="DetailColumn.Width" Value="0" />
